@@ -6,9 +6,10 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
 import type { Route } from "./+types/root";
 import "./app.css";
+import Navbar from "./components/Navbar";
+
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -22,6 +23,12 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
 ];
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "The Friendly Dev" },
+    { name: "description", content: "Welcome to React Router!" },
+  ];
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -33,7 +40,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <Navbar />
+        <main>
         {children}
+        </main>
         <ScrollRestoration />
         <Scripts />
       </body>
