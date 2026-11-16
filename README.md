@@ -1,87 +1,105 @@
-# Welcome to React Router!
+# Friendly Dev Frontend Website
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+This is the frontend for **Friendly Dev**, a developer portfolio website with projects and blog posts. It is built with React Router (framework mode) and Tailwind CSS, and it gets its content from a [Strapi backend](https://github.com/Dominic-gif/Friendly-dev-backend). Images are hosted on Cloudinary.
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- Home page with featured projects and the latest blog posts
+- Projects page with category filtering, pagination and animated cards (Framer Motion)
+- Project detail pages
+- Blog with search, pagination and Markdown-rendered posts
+- About page
+- Contact form powered by Formspree
+- Custom 404 page
+- Server-side rendering with React Router loaders
+
+## Tech Stack
+
+- [React 19](https://react.dev/)
+- [React Router 8](https://reactrouter.com/) (framework mode, SSR)
+- [Tailwind CSS 4](https://tailwindcss.com/) and the Typography plugin
+- [Strapi 5](https://strapi.io/) headless CMS (separate backend repo)
+- [Cloudinary](https://cloudinary.com/) for image hosting
+- [Framer Motion](https://motion.dev/), [React Icons](https://react-icons.github.io/react-icons/) and [React Markdown](https://github.com/remarkjs/react-markdown)
+- TypeScript
+
+## Pages
+
+| Route          | Page                     |
+| -------------- | ------------------------ |
+| `/`            | Home                     |
+| `/projects`    | All projects             |
+| `/projects/:id`| Project details          |
+| `/blog`        | All blog posts           |
+| `/blog/:slug`  | Blog post                |
+| `/about`       | About                    |
+| `/contact`     | Contact form             |
+| `*`            | Not found                |
 
 ## Getting Started
 
-### Installation
-
-Install the dependencies:
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### Development
+### 2. Set the environment variables
 
-Start the development server with HMR:
+Create a `.env` file in the project root that points to your Strapi backend:
+
+```env
+VITE_API_URL='https://your-strapi-backend.com/api'
+VITE_STRAPI_URL='https://your-strapi-backend.com'
+```
+
+For local development with Strapi running on your computer, use `http://localhost:1337/api` and `http://localhost:1337`.
+
+> Anything that starts with `VITE_` ends up in the browser code, so never put secrets in this file.
+
+### 3. Start the dev server
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+The app runs at `http://localhost:5173`.
 
-## Building for Production
+## Scripts
 
-Create a production build:
+| Command               | What it does                                             |
+| --------------------- | -------------------------------------------------------- |
+| `npm run dev`         | Starts the dev server with hot reloading                 |
+| `npm run build`       | Builds the app for production into `build/`              |
+| `npm start`           | Serves the production build                              |
+| `npm run typecheck`   | Generates route types and runs the TypeScript checker    |
+| `npm run json-server` | Serves the old local mock data in `data/db.json` on port 8000 |
 
-```bash
-npm run build
+## Project Structure
+
+```
+app/
+├── components/   Reusable UI (Navbar, Hero, ProjectCard, PostCard, Pagination…)
+├── posts/        Original Markdown posts (before moving content to Strapi)
+├── routes/       Pages and layouts
+├── root.tsx      App shell and error boundary
+├── routes.ts     Route config
+└── types.ts      Project, Post and Strapi response types
+data/db.json      Mock data used with json-server
+public/           Static images and posts-meta.json
 ```
 
 ## Deployment
 
-### Docker Deployment
+The frontend is deployed to [Vercel](https://vercel.com/). Import the GitHub repo, keep the default build settings, and make sure `VITE_API_URL` and `VITE_STRAPI_URL` point to the live Strapi backend on Render.
 
-To build and run using Docker:
+A `Dockerfile` is also included, so the app can run on any platform that supports Docker:
 
 ```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
+docker build -t friendly-dev-frontend .
+docker run -p 3000:3000 friendly-dev-frontend
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+## Related
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+- Backend: [Friendly-dev-backend](https://github.com/Dominic-gif/Friendly-dev-backend)
